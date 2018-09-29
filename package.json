@@ -1,0 +1,21 @@
+{
+  "name": "ycoinsapi",
+  "version": "1.0.0",
+  "description": "Yanapti Coins RestFull API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rafael Ramirez",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.1",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
+    "mongoose": "^5.1.1"
+  }
+}
