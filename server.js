@@ -20,5 +20,5 @@ app.use(jwt({
 var routes = require('./api/routes/userRoutes');
 routes(app,jwt);
 
-app.listen(port);
+app.listen(port,'0.0.0.0');
 console.log('ycoins RESTful API server started on: ' + port);

@@ -25,7 +25,7 @@ exports.create_a_user = function(req, res) {
         console.log(user);
     });
     console.log(new_user.name);
-    let token = jwt.sign({user:new_user.name},secret);
+    let token = jwt.sign({user:new_user.email},secret);
     let session = {
         "user_id": new_user._id,
         "token": token,
@@ -38,7 +38,7 @@ exports.create_a_user = function(req, res) {
         console.log(session);
     });
     autorizarAcceso(new_user.wallet);
-    res.status(200).send({auth:true,token:token});
+    res.status(200).send({auth:true, token:token, user: new_user._id});
 };
 
 function autorizarAcceso(walletId) {
@@ -58,9 +58,37 @@ function autorizarAcceso(walletId) {
 }
 
 exports.sign_in = function(req, res) {
-    let username = req.body.name;
+    let username = req.body.email;
     let password = req.body.password;
-    
-    let token = jwt.sign({user:'root'},secret);
-    res.status(200).send({auth:true,token:token});
+
+    User.findOne({email: username},function(err,user){
+        if(!err) {
+            let usuario = user;
+            if(usuario) {
+                usuario.comparePassword(password, function (err, esIgual) {
+                    if (!err) {
+                        if (esIgual) {
+                            let token = jwt.sign({user: user.email}, secret);
+                            let session = {
+                                "user_id": usuario._id,
+                                "token": token,
+                            };
+                            let new_session = new Session(session);
+                            new_session.save((error)=>{
+                                if(error){
+                                    console.log("Error al crear la sesion");
+                                }
+                                console.log(session);
+                            });
+                            res.status(200).send({auth: true, token: token, user: usuario._id});
+                        } else {
+                            res.status(401).send({reason: 'invalid password'});
+                        }
+                    }
+                });
+            }else{
+                res.status(401).send({reason:'invalid user'});
+            }
+        }
+    })
 };
