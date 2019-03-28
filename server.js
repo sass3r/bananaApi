@@ -8,7 +8,7 @@ var express = require('express'),
     jwt = require('express-jwt');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/YanaptiChain');
+mongoose.connect('mongodb://localhost/BananaChain');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());

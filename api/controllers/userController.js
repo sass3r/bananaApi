@@ -42,7 +42,7 @@ exports.create_a_user = function(req, res) {
 };
 
 function autorizarAcceso(walletId) {
-    const multichain = spawn('multichain-cli',['YanaptiChain','grant',walletId,'connect,send,receive']);
+    const multichain = spawn('multichain-cli',['BananaChain','grant',walletId,'connect,send,receive']);
 
     multichain.stdout.on('data',(data)=>{
         console.log(`stdout: ${data}`);
